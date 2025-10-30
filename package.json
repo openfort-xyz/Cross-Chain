@@ -13,6 +13,12 @@
   "dependencies": {
     "@eco-foundation/routes-sdk": "^0.14.4",
     "@eco-foundation/routes-ts": "^2.8.20",
+    "dotenv": "^17.2.3",
     "viem": "^2.38.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }
