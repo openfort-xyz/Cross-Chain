@@ -6,10 +6,11 @@ import 'dotenv/config';
 
 const {
     OWNER_PRIVATE_KEY
-} = process.env as Record<
-    string,
-    Hex
->
+} = process.env as Record<string, Hex>;
+
+if (!OWNER_PRIVATE_KEY) {
+    throw new Error('OWNER_PRIVATE_KEY is not defined in environment variables');
+}
 
 const owner: Account = privateKeyToAccount(OWNER_PRIVATE_KEY);
 
@@ -23,14 +24,14 @@ function toViemChain(chainConfig: ChainConfig) {
     };
 }
 
-export function getWalletClientForChain(chainName: string, account: Account = owner) {
-    const chainConfig = getChain(chainName);
+export async function getWalletClientForChain(chainName: string, account: Account = owner) {
+    const chainConfig = await getChain(chainName);
 
     if (!chainConfig) {
         throw new Error(`Unsupported chain: ${chainName}`);
     }
 
-    const chain = toViemChain(chainConfig);
+    const chain = await toViemChain(chainConfig);
 
     return createWalletClient({
         account,
@@ -39,7 +40,7 @@ export function getWalletClientForChain(chainName: string, account: Account = ow
     });
 }
 
-export type WalletClient = ReturnType<typeof getWalletClientForChain>;
+export type WalletClient = Awaited<ReturnType<typeof getWalletClientForChain>>;
 
 export class WalletsClient {
     readonly account: Account;
@@ -48,11 +49,11 @@ export class WalletsClient {
         this.account = privateKeyToAccount(privateKey);
     }
 
-    getWalletClient(chainName: string) {
+    async getWalletClient(chainName: string) {
         return getWalletClientForChain(chainName, this.account);
     }
 
-    getWalletClientForChain(chainName: string) {
+    async getWalletClientForChain(chainName: string) {
         return this.getWalletClient(chainName);
     }
 }

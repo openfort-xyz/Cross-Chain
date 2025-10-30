@@ -246,6 +246,6 @@ export const CHAINS_BY_FLAG: Record<string, ChainConfig> = {
   ink: inkChain,
 };
 
-export function getChain(chainName: string): ChainConfig | undefined {
+export async function getChain(chainName: string): Promise <ChainConfig | undefined> {
   return CHAINS_BY_FLAG[chainName.toLowerCase()];
 }

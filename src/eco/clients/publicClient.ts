@@ -2,7 +2,7 @@ import type { Chain } from 'viem';
 import { createPublicClient, http } from 'viem';
 import { getChain, type ChainConfig } from "../data/chain/chains";
 
-function toViemChain(chainConfig: ChainConfig): Chain {
+async function toViemChain(chainConfig: ChainConfig): Promise <Chain> {
     return {
         id: chainConfig.id,
         name: chainConfig.name,
@@ -12,14 +12,14 @@ function toViemChain(chainConfig: ChainConfig): Chain {
     } as Chain;
 }
 
-export function getPublicClientForChain(chainName: string) {
-    const chainConfig = getChain(chainName);
+export async function getPublicClientForChain(chainName: string) {
+    const chainConfig = await getChain(chainName);
 
     if (!chainConfig) {
         throw new Error(`Unsupported chain: ${chainName}`);
     }
 
-    const chain = toViemChain(chainConfig);
+    const chain = await toViemChain(chainConfig);
 
     return createPublicClient({
         chain,
@@ -27,4 +27,4 @@ export function getPublicClientForChain(chainName: string) {
     });
 }
 
-export type PublicClient = ReturnType<typeof getPublicClientForChain>;
+export type PublicClient = Awaited<ReturnType<typeof getPublicClientForChain>>;

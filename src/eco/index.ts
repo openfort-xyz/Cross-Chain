@@ -11,7 +11,7 @@ async function main() {
     const explorer = await getExplorerUrl("ink", "tx");
     console.log(explorer);
 
-    const publicClient: PublicClient = getPublicClientForChain("arbitrum");
+    const publicClient: PublicClient = await getPublicClientForChain("arbitrum");
 
     const blockNumber = await publicClient.getBlockNumber();
     console.log(blockNumber);

@@ -131,21 +131,23 @@ export class AddressBook {
         },
     };
 
-    static getToken(chainId: number, tokenSymbol: string): Token | undefined {
+    static async getToken(chainId: number, tokenSymbol: string): Promise<Token | undefined> {
         return this.TOKENS[chainId]?.[tokenSymbol];
     }
 
-    static getTokenAddress(chainId: number, tokenSymbol: string): Hex | undefined {
-        return this.getToken(chainId, tokenSymbol)?.address;
+    static async getTokenAddress(chainId: number, tokenSymbol: string): Promise<Hex | undefined> {
+        const token = await this.getToken(chainId, tokenSymbol);
+        return token?.address;
     }
 
-    static getChainTokens(chainId: number) {
+    static async getChainTokens(chainId: number): Promise<Record<string, Token>> {
         return this.TOKENS[chainId] || {};
     }
 
-    static hasToken(chainId: number, tokenSymbol: string): boolean {
-        return this.getToken(chainId, tokenSymbol) !== undefined;
+    static async hasToken(chainId: number, tokenSymbol: string): Promise<boolean> {
+        const token = await this.getToken(chainId, tokenSymbol);
+        return token !== undefined;
     }
 }
 
-export const addressBook: AddressBook = new AddressBook();
+export const addressBook = new AddressBook();
