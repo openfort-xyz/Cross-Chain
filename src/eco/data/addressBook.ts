@@ -149,5 +149,3 @@ export class AddressBook {
         return token !== undefined;
     }
 }
-
-export const addressBook = new AddressBook();

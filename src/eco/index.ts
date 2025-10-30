@@ -1,5 +1,6 @@
 
 import { getChain } from "./data/chain/chains";
+import { AddressBook } from "./data/addressBook";
 import { walletsClient } from "./clients/walletClient";
 import { getExplorerUrl } from "./data/chain/explorersURL";
 import { getPublicClientForChain, type PublicClient } from "./clients/publicClient";
@@ -22,6 +23,13 @@ async function main() {
         address: walletsClient.account.address,
     });
     console.log(balance);
+
+    const walletClientBase = await walletsClient.getWalletClient("base");
+    
+    console.log("Base chain ID:", walletClientBase.chain.id);
+    
+    const usdcAddress = await AddressBook.getTokenAddress(walletClientBase.chain.id, "USDC");
+    console.log("USDC Address:", usdcAddress);
 }
 
 main().catch((e) => {
