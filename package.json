@@ -1,0 +1,17 @@
+{
+  "name": "cross-chain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@eco-foundation/routes-sdk": "^0.14.4",
+    "@eco-foundation/routes-ts": "^2.8.20",
+    "viem": "^2.38.5"
+  }
+}
